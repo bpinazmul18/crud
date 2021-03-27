@@ -28,9 +28,10 @@ mongodb.MongoClient.connect(dbUrl, function (err, db) {
     const { errors, isValid } = validate(req.body);
     if (isValid) {
       const { title, cover } = req.body;
+
       db.collection("games").insert({ title, cover }, (err, result) => {
         if (err) {
-          res.status(500).json({ errors: { global: "Something went wrong" } });
+          res.status(500).json({ errors: { global: "something went wrong" } });
         } else {
           res.json({ game: result.ops[0] });
         }
