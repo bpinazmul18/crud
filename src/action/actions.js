@@ -1,5 +1,15 @@
 export const SET_GAMES = "SET_GAMES";
 
+const handleResponse = (response) => {
+  if (response.ok) {
+    return response.json();
+  } else {
+    let error = new Error(response.statusText);
+    error.response = response;
+    throw error;
+  }
+};
+
 export const setGames = (games) => {
   return {
     type: SET_GAMES,
@@ -8,7 +18,6 @@ export const setGames = (games) => {
 };
 
 //post request
-
 export const saveGame = (data) => (dispatch) => {
   return fetch("/api/games", {
     method: "post",
@@ -16,7 +25,7 @@ export const saveGame = (data) => (dispatch) => {
     headers: {
       "Content-Type": "application/json",
     },
-  });
+  }).then(handleResponse);
 };
 
 //get request

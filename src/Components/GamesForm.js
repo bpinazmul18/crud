@@ -35,10 +35,15 @@ class GamesForm extends Component {
 
     if (isValid) {
       const { title, cover } = this.state;
-
       this.setState({ loading: true });
-
-      this.props.saveGame({ title, cover });
+      this.props.saveGame({ title, cover }).then(
+        () => {},
+        (err) => {
+          err.response
+            .json()
+            .then(({ errors }) => this.setState({ errors, loading: false }));
+        }
+      );
     }
   };
 
@@ -49,6 +54,12 @@ class GamesForm extends Component {
         onSubmit={this.handleSubmit}
       >
         <h1>Add new games</h1>
+
+        {!!this.state.errors.global && (
+          <div className="ui negative message">
+            <p>{this.state.errors.global}</p>
+          </div>
+        )}
 
         <div
           className={classnames("field", { error: !!this.state.errors.title })}
