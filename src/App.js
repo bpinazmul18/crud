@@ -1,22 +1,26 @@
-import logo from "./logo.svg";
-import "./App.css";
 import { Link, Switch, Route } from "react-router-dom";
 import GamesPage from "./Components/GamesPage";
+import GamesForm from "./Components/GamesForm";
+import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <Link to="games">Games</Link>
-
-        <Switch>
-          <Route exact path="/games" component={GamesPage} />
-        </Switch>
-      </header>
+    <div className="ui container">
+      <div className="ui three item menu">
+        <Link className="item" to="/">
+          Home
+        </Link>
+        <Link className="item" to="/games">
+          Games
+        </Link>
+        <Link className="item" to="/games/new">
+          Add New Games
+        </Link>
+      </div>
+      <Switch>
+        <Route exact path="/games" component={GamesPage} />
+        <Route exact path="/games/new" component={GamesForm} />
+      </Switch>
     </div>
   );
 }
