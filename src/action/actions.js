@@ -1,4 +1,5 @@
 export const SET_GAMES = "SET_GAMES";
+export const ADD_GAME = "ADD_GAME";
 
 const handleResponse = (response) => {
   if (response.ok) {
@@ -17,6 +18,13 @@ export const setGames = (games) => {
   };
 };
 
+export const addGame = (game) => {
+  return {
+    type: ADD_GAME,
+    game,
+  };
+};
+
 //post request
 export const saveGame = (data) => (dispatch) => {
   return fetch("/api/games", {
@@ -25,7 +33,9 @@ export const saveGame = (data) => (dispatch) => {
     headers: {
       "Content-Type": "application/json",
     },
-  }).then(handleResponse);
+  })
+    .then(handleResponse)
+    .then((data) => dispatch(addGame(data.game)));
 };
 
 //get request
