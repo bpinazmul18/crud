@@ -1,5 +1,7 @@
 import { Component } from "react";
 import classnames from "classnames";
+import { connect } from "react-redux";
+import { saveGame } from "../action/actions";
 
 class GamesForm extends Component {
   state = {
@@ -36,7 +38,7 @@ class GamesForm extends Component {
 
       this.setState({ loading: true });
 
-      // this.props.saveGame({ title, cover });
+      this.props.saveGame({ title, cover });
     }
   };
 
@@ -94,4 +96,4 @@ class GamesForm extends Component {
   }
 }
 
-export default GamesForm;
+export default connect(null, { saveGame })(GamesForm);

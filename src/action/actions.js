@@ -7,6 +7,18 @@ export const setGames = (games) => {
   };
 };
 
+//post request
+
+export const saveGame = (data) => (dispatch) => {
+  return fetch("/api/games", {
+    method: "post",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
+
 //get request
 export const fetchGames = () => (dispatch) => {
   return fetch("/api/games")
