@@ -7,6 +7,7 @@ export const setGames = (games) => {
   };
 };
 
+//get request
 export const fetchGames = () => (dispatch) => {
   return fetch("/api/games")
     .then((res) => res.json())

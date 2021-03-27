@@ -6,6 +6,7 @@ class GamesForm extends Component {
     title: "",
     cover: "",
     errors: {},
+    loading: false,
   };
 
   handleChange = (e) => {
@@ -27,11 +28,24 @@ class GamesForm extends Component {
     if (this.state.title === "") errors.title = "Can't be empty";
     if (this.state.cover === "") errors.cover = "Can't be empty";
     this.setState({ errors });
+
+    const isValid = Object.keys(errors).length === 0;
+
+    if (isValid) {
+      const { title, cover } = this.state;
+
+      this.setState({ loading: true });
+
+      // this.props.saveGame({ title, cover });
+    }
   };
 
   render() {
     return (
-      <form className="ui form" onSubmit={this.handleSubmit}>
+      <form
+        className={classnames("ui", "form", { loading: this.state.loading })}
+        onSubmit={this.handleSubmit}
+      >
         <h1>Add new games</h1>
 
         <div
