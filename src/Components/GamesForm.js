@@ -2,6 +2,7 @@ import { Component } from "react";
 import classnames from "classnames";
 import { connect } from "react-redux";
 import { saveGame } from "../action/actions";
+import { Redirect } from "react-router-dom";
 
 class GamesForm extends Component {
   state = {
@@ -9,6 +10,7 @@ class GamesForm extends Component {
     cover: "",
     errors: {},
     loading: false,
+    done: false,
   };
 
   handleChange = (e) => {
@@ -26,18 +28,18 @@ class GamesForm extends Component {
     e.preventDefault();
 
     let errors = {};
-
     if (this.state.title === "") errors.title = "Can't be empty";
     if (this.state.cover === "") errors.cover = "Can't be empty";
     this.setState({ errors });
-
     const isValid = Object.keys(errors).length === 0;
 
     if (isValid) {
       const { title, cover } = this.state;
       this.setState({ loading: true });
       this.props.saveGame({ title, cover }).then(
-        () => {},
+        () => {
+          this.setState({ done: true });
+        },
         (err) => {
           err.response
             .json()
@@ -48,7 +50,7 @@ class GamesForm extends Component {
   };
 
   render() {
-    return (
+    const form = (
       <form
         className={classnames("ui", "form", { loading: this.state.loading })}
         onSubmit={this.handleSubmit}
@@ -104,6 +106,8 @@ class GamesForm extends Component {
         </div>
       </form>
     );
+
+    return <div>{this.state.done ? <Redirect to="/games" /> : form}</div>;
   }
 }
 
