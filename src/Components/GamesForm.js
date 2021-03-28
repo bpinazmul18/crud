@@ -14,6 +14,14 @@ class GamesForm extends Component {
     done: false,
   };
 
+  componentWillReceiveProps = (nextProps) => {
+    this.setState({
+      _id: nextProps.game._id,
+      title: nextProps.game.title,
+      cover: nextProps.game.cover,
+    });
+  };
+
   componentDidMount = () => {
     if (this.props.match.params._id) {
       this.props.fetchGame(this.props.match.params._id);
