@@ -1,9 +1,20 @@
-import { ADD_GAME, SET_GAMES, GAME_FETCHED } from "../action/actions";
+import {
+  ADD_GAME,
+  SET_GAMES,
+  GAME_FETCHED,
+  GAME_UPDATED,
+} from "../action/actions";
 
 const gamesReducer = (state = [], action) => {
   switch (action.type) {
     case ADD_GAME:
       return [...state, action.game];
+
+    case GAME_UPDATED:
+      return state.map((item) => {
+        if (item._id === action.game._id) return action.game;
+        return item;
+      });
 
     case GAME_FETCHED:
       const index = state.findIndex((item) => item._id === action.game._id);
